@@ -10,7 +10,7 @@ D’après le cours, on a les formules suivantes :
 Tight class cohesion TCC = number of direct connections / maximum number of connections
 Loose class cohesion LCC = (number of direct connections + number of indirect connections) / maximum number of connections
 
-TCC et LCC peuvent nous retourner la même valeur si le nombre de connexions indirectes est égal à zéro.
+TCC et LCC peuvent nous retourner la même valeur si le nombre de connexions indirectes est égal à zéro. Toute méthode a donc au moins un paramètre en commun avec chaque autre méthode. Cela implique qu'il n'y ait pas de getters, ou alors un seul, car les getters n'ont forcément pas de paramètre en commun. Dans notre exemple, nous avons créé une classe avec un unique getter et une seule méthode. La TCC est donc égale à 1/1 = 1 et la LCC vaut (1+0)/1 = 1.
 
 ~~~
 public class xClass{
