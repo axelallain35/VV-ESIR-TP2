@@ -35,3 +35,4 @@ graph TD;
     x([x])-- x -->s([square])
 ```
 
+La LCC cne pourra jamais être plus fiable que la TCC car avec la formule énoncée au dessus, LCC >= TCC. En effet, le nombre de connexions indirectes ne peut pas être négatif et les deux valeurs ont le même nombre de connexions directs.
