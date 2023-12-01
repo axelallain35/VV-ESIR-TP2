@@ -6,3 +6,32 @@ A refresher on TCC and LCC is available in the [course notes](https://oscarlvp.g
 
 ## Answer
 
+D’après le cours, on a les formules suivantes : 
+Tight class cohesion TCC = number of direct connections / maximum number of connections
+Loose class cohesion LCC = (number of direct connections + number of indirect connections) / maximum number of connections
+
+TCC et LCC peuvent nous retourner la même valeur si le nombre de connexions indirectes est égal à zéro.
+
+~~~
+public class xClass{
+    private int x;
+
+    public DataClass(int x) {
+        this.x = x;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+  public int square(){
+    return x * x;
+  }
+}
+~~~
+
+```mermaid
+graph TD;
+    x([x])-- x -->s([square])
+```
+
