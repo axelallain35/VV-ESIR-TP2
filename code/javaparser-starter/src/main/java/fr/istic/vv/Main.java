@@ -1,17 +1,11 @@
 package fr.istic.vv;
 
-import com.github.javaparser.Problem;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.visitor.VoidVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.utils.SourceRoot;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Main {
 
@@ -33,6 +27,45 @@ public class Main {
             result.ifSuccessful(unit -> unit.accept(printer, null));
             return SourceRoot.Callback.Result.DONT_SAVE;
         });
+
+        // Initializing detectedFields for the exercice
+        String detectedFields = "";
+
+        // Iterating variable for class names
+        int i = 0;
+
+        // Looping through all private variables without getter
+        for (FieldDeclaration field : printer.getPrivateVarWithoutGetter()) {
+            detectedFields += 
+            
+            // Adding private variable name
+            "Private variable : " + field.getVariable(0).getName() +
+
+            // Adding class name of each variable
+             " | Class : " + printer.getClassNames().get(i)+
+
+            // Adding package name
+            " | Package name : " + printer.getPackageNames()  +"\n";
+            i++;
+        }
+
+        
+
+          // Writing txt file
+          try {
+
+            // Instance of file writer
+            FileWriter myWriter = new FileWriter("noGetter.txt");
+
+            // Writing to file
+            myWriter.write(detectedFields);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        
     }
 
 

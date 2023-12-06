@@ -1,0 +1,2 @@
+Private variable : b | Class : Test | Package name : [fr.istic.vv]
+Private variable : c | Class : Test | Package name : [fr.istic.vv]
