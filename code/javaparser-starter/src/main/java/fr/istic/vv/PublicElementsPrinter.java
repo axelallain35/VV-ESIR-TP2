@@ -24,21 +24,80 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
     // Initializing arraylist for package names
     private ArrayList<String> packageNames = new ArrayList<>();
 
+    // Initializing arraylist for method names
+    private ArrayList<MethodDeclaration> methods = new ArrayList<>();
+
+    // Initializing parameter of methods
+    private ArrayList<String> parameters = new ArrayList<>();
+
+    // Initializing number of methods
+    private int numberOfMethods = 0;
+
+    // Initializing cyclomatic complexity for each method
+    private int[] CyclomaticComplexity;
+
+   
     // Getters
     public ArrayList<String> getPackageNames() {return packageNames;}
     public ArrayList<String> getClassNames() {return classNames;}
     public ArrayList<MethodDeclaration> getGetters() {return getters;}
     public ArrayList<FieldDeclaration> getPrivateVarWithoutGetter() {return privateVarWithoutGetter;}
+    public int[] getCyclomaticComplexity() {return CyclomaticComplexity;}
+    public ArrayList<MethodDeclaration> getMethod() {return methods;}
+    public ArrayList<String> getParameters() {return parameters;}
 
     @Override
     public void visit(CompilationUnit unit, Void arg) { 
 
         // Looping through all methods
+        int i = 0;
         for(MethodDeclaration method : unit.findAll(MethodDeclaration.class)) {
-                if(method.getNameAsString().startsWith("get")){
-                    getters.add(method);
-                }
+            numberOfMethods++;
+
+            // Checking if method is getter
+            if(method.getNameAsString().startsWith("get")){
+                getters.add(method);
             }
+
+            // Adding method names to arraylist
+            methods.add(method);
+
+            // Adding parameters to arraylist
+            parameters.add(method.getParameters().toString());
+        }
+
+        // Initializing array for cyclomatic complexity : each method has a cyclomatic complexity of 1
+        CyclomaticComplexity = new int[numberOfMethods];
+        for(int q = 0; q < numberOfMethods; q++){
+            CyclomaticComplexity[q] = 1;
+        }
+
+        i = 0;
+
+        // Looping through all methods
+        for(MethodDeclaration method : unit.findAll(MethodDeclaration.class)) {
+
+            // Checking if method has a body
+            if(method.getBody().isPresent()){
+
+                // Getting body of method
+                String body = method.getBody().get().toString();
+
+                // Counting number of if, for, while, case, catch, &&, || in the body
+                int ifCount = body.split("if").length - 1;
+                int forCount = body.split("for").length - 1;
+                int whileCount = body.split("while").length - 1;
+                int caseCount = body.split("case").length - 1;
+                int catchCount = body.split("catch").length - 1;
+                int andCount = body.split("&&").length - 1;
+                int orCount = body.split("\\|\\|").length - 1;
+                int cc = ifCount + forCount + whileCount + caseCount + catchCount + andCount + orCount;
+
+                // Adding cyclomatic complexity to array
+                CyclomaticComplexity[i] += cc;
+                i++;
+            }
+        }
 
         // Looping through all package names
         for(PackageDeclaration pack : unit.findAll( PackageDeclaration.class)) {
