@@ -21,6 +21,9 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
     // Initializing arraylist for class names
     private ArrayList<String> classNames = new ArrayList<>();
 
+    // Initializing arraylist for class names
+    private ArrayList<String> classNamesMethods = new ArrayList<>();
+
     // Initializing arraylist for package names
     private ArrayList<String> packageNames = new ArrayList<>();
 
@@ -45,6 +48,7 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
     public int[] getCyclomaticComplexity() {return CyclomaticComplexity;}
     public ArrayList<MethodDeclaration> getMethod() {return methods;}
     public ArrayList<String> getParameters() {return parameters;}
+    public ArrayList<String> getClassNamesMethods() {return classNamesMethods;}
 
     @Override
     public void visit(CompilationUnit unit, Void arg) { 
@@ -62,9 +66,12 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
             // Adding method names to arraylist
             methods.add(method);
 
+            classNamesMethods.add(unit.getClassByName(method.getNameAsString()).toString());
+
             // Adding parameters to arraylist
             parameters.add(method.getParameters().toString());
         }
+
 
         // Initializing array for cyclomatic complexity : each method has a cyclomatic complexity of 1
         CyclomaticComplexity = new int[numberOfMethods];

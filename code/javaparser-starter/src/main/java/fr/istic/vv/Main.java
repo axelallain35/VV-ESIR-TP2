@@ -59,17 +59,17 @@ public class Main {
             " | Package name : " + printer.getPackageNames() +
 
             // Adding class name of each variable
-             " | Class : " + printer.getClassNames().get(i)+
+             " | Class : " + printer.getClassNamesMethods().get(i)+
 
             // Adding method name
             " | Method name : " + method.getNameAsString() +
 
             // Adding cyclomatic complexity
-            " | Cyclomatic complexity : " + printer.getCyclomaticComplexity()[i] + "\n";
+            " | Cyclomatic complexity : " + printer.getCyclomaticComplexity()[i];
 
             if((printer.getParameters().size())>i){
                 // Adding method parameters
-                CyclomaticComplexityJP += " | Parameters : " + printer.getParameters().get(i);
+                CyclomaticComplexityJP += " | Parameters : " + printer.getParameters().get(i)  + "\n";
             }
             i++;
         }
@@ -94,11 +94,7 @@ public class Main {
             }
         }
 
-        // Print the maximum frequency line
-        for(int j = 0; j < max; j++){
-            System.out.print("*");
-        }
-        System.out.println(max + " max frequency");
+        
 
         // Print the histogram
         for (int complexity : histogram.keySet()) {
@@ -108,7 +104,7 @@ public class Main {
             }
             System.out.print(complexity);
             for(int j = 0; j < frequency; j++){
-                System.out.print("-");
+                System.out.print("=");
             }
             System.out.println();
         }
